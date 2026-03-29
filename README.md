@@ -10,17 +10,17 @@
 
 A fleet of *K* vehicles, each with capacity *Q*, serves *N* customers from a central depot on [0,1]². Each customer *i* has stochastic demand
 
-$$d_i \sim \text{LogNormal}(\mu_i^{\ln},\; \sigma_i^{\ln\,2})$$
+$$d_i \sim \text{LogNormal}(\mu_i^{\ln}, \sigma_i^{\ln\,2})$$
 
 parameterised so that the marginal mean and coefficient of variation match specified targets (CV ∈ [0.3, 0.5]). The log-normal is chosen over the Gaussian because demands are non-negative and right-skewed.
 
 We minimise total travel distance subject to a **chance constraint** on each route *R*:
 
-$$\mathbb{P}\!\left(\sum_{j \in R} d_j > Q\right) \leq \varepsilon$$
+$$\mathbb{P}\left(\sum_{j \in R} d_j > Q\right) \leq \varepsilon$$
 
 Under independence, the CLT gives a deterministic equivalent:
 
-$$\sum_{j \in R} \mu_j \;+\; \Phi^{-1}(1-\varepsilon)\,\sqrt{\sum_{j \in R} \sigma_j^2} \;\leq\; Q$$
+$$\sum_{j \in R} \mu_j + \Phi^{-1}(1-\varepsilon)\sqrt{\sum_{j \in R} \sigma_j^2} \leq Q$$
 
 This closed-form expression is evaluated in O(|R|) time and used inside the solver's inner loop. A Monte Carlo path using the true log-normal model validates the approximation post hoc.
 
